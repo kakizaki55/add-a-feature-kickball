@@ -16,8 +16,6 @@ function Teams(user) {
     fetchData();
   }, []);
 
-  console.log(user.user);
-
   const handleDelete = async ({ id, name }) => {
     const shouldDelete = confirm(`Are you sure you want to delete ${name}?`);
 
