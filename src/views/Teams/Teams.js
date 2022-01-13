@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Loading from '../../components/loading/Loading';
 import { deleteTeamById, getTeams } from '../../services/teams';
 
-function Teams() {
+function Teams(user) {
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -15,6 +15,8 @@ function Teams() {
     };
     fetchData();
   }, []);
+
+  console.log(user.user);
 
   const handleDelete = async ({ id, name }) => {
     const shouldDelete = confirm(`Are you sure you want to delete ${name}?`);
@@ -54,14 +56,22 @@ function Teams() {
                       </button>
                     </Link>
 
-                    <Link to={`/teams/${team.id}/edit`}>
-                      <button type="button" className="btn-edit">
-                        Edit
-                      </button>
-                    </Link>
-                    <button type="button" className="btn-delete" onClick={() => handleDelete(team)}>
-                      Delete
-                    </button>
+                    {user.user && (
+                      <>
+                        <Link to={`/teams/${team.id}/edit`}>
+                          <button type="button" className="btn-edit">
+                            Edit
+                          </button>
+                        </Link>
+                        <button
+                          type="button"
+                          className="btn-delete"
+                          onClick={() => handleDelete(team)}
+                        >
+                          Delete
+                        </button>
+                      </>
+                    )}
                   </td>
                 </tr>
               ))}
